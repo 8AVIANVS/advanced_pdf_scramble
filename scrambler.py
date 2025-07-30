@@ -3,6 +3,8 @@ import random
 import os
 from pathlib import Path
 
+GENERATE_FILE_COUNT = 10
+
 # Read the original HTML file
 with open('aapl_p33.html', 'r', encoding='utf-8') as file:
     html_content = file.read()
@@ -339,7 +341,7 @@ print(f"Found {dependent_count} dependent values to calculate")
 os.makedirs('html_out', exist_ok=True)
 
 # Generate 10 randomized versions with proper calculations
-for i in range(1, 11):
+for i in range(1, GENERATE_FILE_COUNT + 1):
     # Create a copy of the processed content
     randomized_content = processed_content
     
@@ -638,7 +640,7 @@ def extract_financial_data_from_html(html_file):
     return json_data
 
 # Generate JSON files for all HTML files
-for i in range(1, 11):
+for i in range(1, GENERATE_FILE_COUNT + 1):
     html_file = f'html_out/{i}.html'
     json_file = f'json_out/{i}.json'
     
