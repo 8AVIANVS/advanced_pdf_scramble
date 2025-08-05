@@ -2,6 +2,7 @@ import re
 import random
 import os
 from pathlib import Path
+from weasyprint import HTML, CSS
 
 GENERATE_FILE_COUNT = 10
 
@@ -655,6 +656,21 @@ for i in range(1, GENERATE_FILE_COUNT + 1):
         print(f"Error generating {json_file}: {e}")
 
 print("\nJSON files generated successfully!")
+
+# Create PDF files from HTML files
+css = CSS(string='''
+@page {
+    size: letter;
+    margin: 1in;
+}
+''')
+
+for i in range(1, GENERATE_FILE_COUNT + 1):
+    html_file = f'html_out/{i}.html'
+    pdf_file = f'pdf_out/{i}.pdf'
+    HTML(html_file).write_pdf(pdf_file, stylesheets=[css])
+    print(f"Generated {pdf_file}")
+    
 
 # Save detailed mapping to CSV file
 import csv
