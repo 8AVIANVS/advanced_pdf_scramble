@@ -8,6 +8,12 @@ json_out/*
 pdf_out/*
 !pdf_out/.gitkeep
 
+docling_md/*
+!docling_md/.gitkeep
+
+reducto_md/*
+!reducto_md/.gitkeep
+
 # macOS system files
 .DS_Store
 .DS_Store?
@@ -16,3 +22,5 @@ pdf_out/*
 .Trashes
 ehthumbs.db
 Thumbs.db 
+
+.env

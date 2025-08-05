@@ -657,11 +657,173 @@ for i in range(1, GENERATE_FILE_COUNT + 1):
 
 print("\nJSON files generated successfully!")
 
-# Create PDF files from HTML files
+# Create PDF files from HTML files with comprehensive styling
 css = CSS(string='''
 @page {
     size: letter;
-    margin: 1in;
+    margin: 0.75in 1in;
+    @top-center {
+        content: "Apple Inc. - Financial Statement";
+        font-family: Helvetica, sans-serif;
+        font-size: 10pt;
+        font-weight: bold;
+    }
+    @bottom-center {
+        content: "Page " counter(page) " of " counter(pages);
+        font-family: Helvetica, sans-serif;
+        font-size: 9pt;
+    }
+}
+
+/* Base styling */
+body {
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 8.5pt;
+    line-height: 1.2;
+    color: #000000;
+    margin: 0;
+    padding: 0;
+}
+
+/* Hide XBRL metadata */
+div[style*="display:none"], 
+ix\\:header, 
+ix\\:header * {
+    display: none !important;
+}
+
+/* Main content styling */
+div {
+    page-break-inside: avoid;
+}
+
+/* Table styling for financial statements */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 12pt;
+    page-break-inside: avoid;
+    font-size: 8.5pt;
+}
+
+/* Table cells */
+td {
+    padding: 2px 4px;
+    vertical-align: top;
+    border: none;
+}
+
+/* Header rows with borders */
+td[style*="border-top"] {
+    border-top: 1pt solid #000000;
+}
+
+/* Alternating row backgrounds */
+tr:has(td[style*="background-color:#efefef"]) {
+    background-color: #efefef;
+}
+
+tr:has(td[style*="background-color:#ffffff"]) {
+    background-color: #ffffff;
+}
+
+/* Text alignment */
+.text-center, 
+td[style*="text-align:center"] {
+    text-align: center;
+}
+
+.text-right, 
+td[style*="text-align:right"] {
+    text-align: right;
+}
+
+.text-left, 
+td[style*="text-align:left"] {
+    text-align: left;
+}
+
+/* Typography */
+span[style*="font-weight:700"] {
+    font-weight: bold;
+}
+
+span[style*="font-size:9pt"] {
+    font-size: 9pt;
+}
+
+span[style*="font-size:8pt"] {
+    font-size: 8pt;
+}
+
+span[style*="font-size:8.5pt"] {
+    font-size: 8.5pt;
+}
+
+/* Title styling */
+div:has(span[style*="font-weight:700"][style*="font-size:9pt"]) {
+    text-align: center;
+    margin: 12pt 0;
+    font-weight: bold;
+}
+
+/* Ensure numbers align properly */
+span:contains("$"), 
+span:contains("(") {
+    font-family: "Courier New", monospace;
+}
+
+/* Page break controls */
+.page-break-before {
+    page-break-before: always;
+}
+
+.page-break-after {
+    page-break-after: always;
+}
+
+.no-page-break {
+    page-break-inside: avoid;
+}
+
+/* Financial statement specific styling */
+div[style*="min-height:42.75pt"] {
+    min-height: 42.75pt;
+    page-break-after: avoid;
+}
+
+/* Indentation levels for financial line items */
+div[style*="padding-left:9pt"] {
+    padding-left: 9pt;
+}
+
+div[style*="padding-left:15.75pt"] {
+    padding-left: 15.75pt;
+}
+
+div[style*="padding-left:27pt"] {
+    padding-left: 27pt;
+}
+
+div[style*="padding-left:30.25pt"] {
+    padding-left: 30.25pt;
+}
+
+/* Print-specific optimizations */
+@media print {
+    body {
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+    
+    table {
+        font-size: 8pt;
+    }
+    
+    /* Ensure financial tables don't break across pages */
+    table[style*="border-collapse:collapse"] {
+        page-break-inside: avoid;
+    }
 }
 ''')
 
